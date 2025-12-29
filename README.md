@@ -1,5 +1,6 @@
 # 🌦️ Weather Intelligence Dashboard
 
+![Project Banner](https://sourcecodejournal.dev/assets/projects/Weather_Intelligence.png)
 **Weather Intelligence Dashboard** adalah aplikasi web statis yang menampilkan informasi cuaca **real-time** dan **forecast 7 hari** dengan visualisasi **animasi cuaca murni CSS** (tanpa gambar, tanpa canvas, tanpa library eksternal).
 
 Proyek ini dibangun sebagai **open-source showcase** dengan fokus pada:
