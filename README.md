@@ -87,8 +87,6 @@ Human-readable weather
 Weather code API diterjemahkan ke istilah manusia
 
 ⚙️ Cara Menjalankan Secara Lokal
-bash
-Copy code
 git clone https://github.com/aam19azmi/weather-intelligence-dashboard.git
 cd weather-intelligence-dashboard
 Buka index.html langsung di browser
