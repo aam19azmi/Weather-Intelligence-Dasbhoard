@@ -1,0 +1,237 @@
+/* =========================
+   CSS RESET & VARIABLES
+========================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #020617;
+    --bg-glass: rgba(15, 23, 42, 0.65);
+    --border-glass: rgba(255, 255, 255, 0.08);
+
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+
+    --accent: #38bdf8;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+
+    --radius-lg: 20px;
+    --radius-md: 12px;
+}
+
+/* =========================
+   BASE
+========================= */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* =========================
+   WEATHER SCENE LAYER
+========================= */
+.weather-scene {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        to bottom,
+        #020617 0%,
+        #020617 40%,
+        #020617 100%
+    );
+    overflow: hidden;
+}
+
+/* =========================
+   APP CONTAINER
+========================= */
+.app {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* =========================
+   HEADER
+========================= */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.app-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.app-title span {
+    color: var(--accent);
+}
+
+.subtitle {
+    margin-top: 8px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* =========================
+   CURRENT WEATHER CARD
+========================= */
+.current-weather {
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+    margin-bottom: 40px;
+}
+
+.location {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.temperature {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.temperature sup {
+    font-size: 1.5rem;
+}
+
+.condition {
+    margin-top: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* =========================
+   ALERTS
+========================= */
+.alerts {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 32px;
+    color: #fecaca;
+    font-size: 0.9rem;
+}
+
+/* =========================
+   FORECAST
+========================= */
+.forecast h2 {
+    margin-bottom: 16px;
+    font-size: 1.3rem;
+}
+
+.forecast-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+}
+
+.forecast-card {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.forecast-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.forecast-day {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.forecast-temp {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.forecast-desc {
+    margin-top: 4px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+footer a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    .app {
+        padding: 16px;
+    }
+
+    .app-title {
+        font-size: 1.7rem;
+    }
+
+    .temperature {
+        font-size: 3.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .current-weather {
+        padding: 24px 16px;
+    }
+
+    .meta {
+        grid-template-columns: 1fr;
+    }
+}

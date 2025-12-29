@@ -1,0 +1,172 @@
+/* =================================================
+   WEATHER SCENE BASE
+================================================= */
+.weather-scene {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* =================================================
+   CLEAR / SUNNY
+================================================= */
+.weather-scene.clear {
+    background: linear-gradient(
+        to bottom,
+        #0f172a 0%,
+        #1e3a8a 60%,
+        #38bdf8 100%
+    );
+}
+
+.weather-scene.clear::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    right: 15%;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, #fde047, #f59e0b);
+    border-radius: 50%;
+    box-shadow: 0 0 80px rgba(253, 224, 71, 0.6);
+    animation: sunPulse 6s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+/* =================================================
+   CLOUDY
+================================================= */
+.weather-scene.cloudy {
+    background: linear-gradient(
+        to bottom,
+        #020617,
+        #1e293b
+    );
+}
+
+.cloud {
+    position: absolute;
+    top: 20%;
+    left: -250px;
+    width: 220px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 50px;
+    filter: blur(1px);
+    animation: cloudMove 80s linear infinite;
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    width: 120px;
+    height: 90px;
+    top: -45px;
+    border-radius: 50%;
+}
+
+.cloud::before { left: 25px; }
+.cloud::after { right: 25px; }
+
+@keyframes cloudMove {
+    to { transform: translateX(120vw); }
+}
+
+/* =================================================
+   RAIN
+================================================= */
+.weather-scene.rain {
+    background: linear-gradient(
+        to bottom,
+        #020617,
+        #0f172a
+    );
+}
+
+.rain-layer {
+    position: absolute;
+    inset: 0;
+}
+
+.rain-drop {
+    position: absolute;
+    width: 2px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.5);
+    animation: rainFall 0.8s linear infinite;
+}
+
+@keyframes rainFall {
+    from {
+        transform: translateY(-20px);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
+/* =================================================
+   STORM / THUNDER
+================================================= */
+.weather-scene.storm {
+    background: linear-gradient(
+        to bottom,
+        #020617,
+        #020617,
+        #020617
+    );
+}
+
+.weather-scene.storm::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    animation: lightning 8s infinite;
+}
+
+@keyframes lightning {
+    0%, 92%, 100% { opacity: 0; }
+    93% { opacity: 0.8; }
+    95% { opacity: 0.2; }
+}
+
+/* =================================================
+   FOG
+================================================= */
+.weather-scene.fog {
+    background: linear-gradient(
+        to bottom,
+        #020617,
+        #334155
+    );
+}
+
+.fog-layer {
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-linear-gradient(
+            -10deg,
+            rgba(255,255,255,0.04),
+            rgba(255,255,255,0.04) 10px,
+            transparent 10px,
+            transparent 20px
+        );
+    animation: fogMove 40s linear infinite;
+}
+
+@keyframes fogMove {
+    from { background-position: 0 0; }
+    to { background-position: 100vw 0; }
+}

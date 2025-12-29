@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Weather Intelligence Dashboard – Cuaca Real-Time Indonesia</title>
+
+    <!-- SEO -->
+    <meta name="description" content="Weather Intelligence Dashboard menampilkan cuaca real-time, prakiraan, dan peringatan cuaca berbasis lokasi dengan animasi CSS dinamis.">
+    <meta name="author" content="Azmi Jalaluddin Amron">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://weather.sourcecodejournal.dev/">
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="Weather Intelligence Dashboard">
+    <meta property="og:url" content="https://weather.sourcecodejournal.dev/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Weather Intelligence Dashboard">
+    <meta property="og:description" content="Pantau cuaca real-time dengan visual animasi awan, hujan, dan matahari berbasis CSS.">
+    <meta property="og:image" content="https://sourcecodejournal.dev/assets/logo/logo.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="weather.css">
+    <link rel="icon" href="https://sourcecodejournal.dev/assets/logo/logo.png" type="image/png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Weather Intelligence Dashboard",
+      "url": "https://weather.sourcecodejournal.dev/",
+      "author": {
+        "@type": "Person",
+        "name": "Azmi Jalaluddin Amron",
+        "url": "https://sourcecodejournal.dev"
+      },
+      "inLanguage": "id-ID",
+      "description": "Dashboard cuaca real-time dengan animasi cuaca berbasis CSS."
+    }
+    </script>
+</head>
+
+<body>
+
+<!-- Weather Background Animation -->
+<div id="weather-scene" class="weather-scene clear">
+    <!-- elemen animasi cuaca akan di-handle via CSS -->
+</div>
+
+<div class="app">
+
+    <header class="header">
+        <h1 class="app-title">Weather<span>Intelligence</span></h1>
+        <p class="subtitle">Cuaca real-time berbasis lokasi & data terbuka</p>
+    </header>
+
+    <main>
+
+        <!-- Location & Current Weather -->
+        <section class="current-weather" aria-live="polite">
+            <div class="location">
+                <span id="city">Memuat lokasi...</span>
+            </div>
+
+            <div class="temperature">
+                <span id="temp">--</span><sup>°C</sup>
+            </div>
+
+            <div class="condition" id="condition">
+                --
+            </div>
+
+            <div class="meta">
+                <div>💨 Angin: <strong id="wind">-- km/j</strong></div>
+                <div>☀️ UV: <strong id="uv">--</strong></div>
+                <div>🌫️ AQI: <strong id="aqi">--</strong></div>
+            </div>
+        </section>
+
+        <!-- Alerts -->
+        <section class="alerts" id="alerts" hidden>
+            <!-- alert dinamis -->
+        </section>
+
+        <!-- Forecast -->
+        <section class="forecast">
+            <h2>Prakiraan 7 Hari</h2>
+            <div class="forecast-list" id="forecast">
+                <!-- forecast card -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>
+            Data oleh <strong>Open-Meteo API</strong> •
+            © 2025 <a href="https://sourcecodejournal.dev" target="_blank" rel="noopener">Azmi Jalaluddin Amron</a>
+        </p>
+    </footer>
+
+</div>
+
+<script src="utils.js"></script>
+<script src="scripts.js" defer></script>
+</body>
+</html>
