@@ -17,6 +17,7 @@ const alertsContainer = document.getElementById('alerts');
    INIT
 ================================ */
 initWeather();
+let currentAQI = null;
 
 /* ===============================
    MAIN FLOW
@@ -28,6 +29,7 @@ function initWeather() {
                 const { latitude, longitude } = pos.coords;
                 fetchWeather(latitude, longitude);
                 fetchLocationName(latitude, longitude);
+                fetchAirQuality(latitude, longitude);
             },
             () => fallbackLocation()
         );
@@ -79,6 +81,7 @@ function fallbackLocation() {
     const lat = -6.2;
     const lon = 106.816666;
     fetchWeather(lat, lon);
+    fetchAirQuality(lat, lon);
     cityEl.textContent = 'Jakarta';
 }
 
@@ -89,14 +92,29 @@ function renderCurrent(current) {
     tempEl.textContent = Math.round(current.temperature_2m);
     windEl.textContent = `${current.wind_speed_10m} km/j`;
     uvEl.textContent = current.uv_index ?? '--';
-    aqiEl.textContent = '--'; // reserved
 
     const weather = mapWeatherCode(current.weathercode);
     conditionEl.textContent = weather.label;
 
     updateWeatherScene(weather.type);
-    renderAlerts(current, weather.type);
+
+    // INTELLIGENCE
+    const uvRisk = mapUVRisk(current.uv_index);
+    const severity = weatherSeverityScore({
+        wind: current.wind_speed_10m,
+        uv: current.uv_index,
+        storm: weather.storm,
+        rain: weather.type === 'rain'
+    });
+
+    renderAlerts({
+        uvRisk,
+        severity,
+        weatherType: weather.type,
+        airQuality: mapAirQuality(currentAQI || 50)
+    });
 }
+
 
 /* ===============================
    FORECAST
@@ -170,26 +188,56 @@ function createFog() {
 /* ===============================
    ALERTS (UX INTELLIGENCE)
 ================================ */
-function renderAlerts(current, weatherType) {
+function renderAlerts({ uvRisk, severity, weatherType, airQuality }) {
     alertsContainer.innerHTML = '';
     alertsContainer.hidden = true;
 
-    const alerts = [];
+    const messages = [];
 
-    if (current.uv_index >= 8) {
-        alerts.push('☀️ UV sangat tinggi, gunakan pelindung kulit.');
+    if (airQuality && airQuality.level !== 'good') {
+        messages.push(`🌫️ Kualitas udara: ${airQuality.label}`);
     }
 
-    if (current.wind_speed_10m >= 40) {
-        alerts.push('💨 Angin kencang, waspada aktivitas luar ruangan.');
+    if (uvRisk.level === 'Tinggi' || uvRisk.level === 'Ekstrem') {
+        messages.push(`☀️ UV ${uvRisk.level}: ${uvRisk.advice}`);
     }
 
     if (weatherType === 'rain' || weatherType === 'storm') {
-        alerts.push('🌧️ Potensi hujan, siapkan payung.');
+        messages.push('🌧️ Potensi hujan, siapkan payung.');
     }
 
-    if (alerts.length) {
+    if (severity.level !== 'Aman') {
+        messages.push(`⚠️ Tingkat cuaca: ${severity.level}`);
+        alertsContainer.style.borderColor = severity.color;
+    }
+
+    if (messages.length) {
         alertsContainer.hidden = false;
-        alertsContainer.innerHTML = alerts.join('<br>');
+        alertsContainer.innerHTML = messages.join('<br>');
     }
 }
+
+/* ===============================
+   FETCH AIR QUALITY (OpenAQ)
+================================ */
+async function fetchAirQuality(lat, lon) {
+    try {
+        const res = await fetch(
+            `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=us_aqi&timezone=auto`
+        );
+
+        if (!res.ok) throw new Error('AQI API error');
+
+        const data = await res.json();
+        const aqi = data.hourly.us_aqi[0];
+
+        currentAQI = aqi;
+        renderAirQuality(aqi);
+
+        return aqi;
+    } catch {
+        aqiEl.textContent = '--';
+        return null;
+    }
+}
+
